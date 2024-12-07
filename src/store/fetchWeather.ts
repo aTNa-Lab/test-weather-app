@@ -52,7 +52,7 @@ export const transformWeatherData = (
 
   const mergedList = everyFourthItem.map((item1: any, index: number) => {
     const item2 = everyFourthItemWithShift[index];
-    console.log(new Date(item1.dt * 1000), new Date(item2.dt * 1000))
+
     return {
       ...item1, // Start with all properties from item1
       main: {
@@ -63,10 +63,7 @@ export const transformWeatherData = (
     };
   });
 
-  console.log(mergedList.length)
-
   mergedList.forEach((i: any, index: number) => {
-    console.log(i);
     forecast.push({
       day: next7Days[index],
       temp: {
