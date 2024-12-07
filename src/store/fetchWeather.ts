@@ -47,12 +47,31 @@ export const transformWeatherData = (
 
   const next7Days = getNextSevenDays();
 
-  res[1].list.forEach((i: any, index: number) => {
+  const everyFourthItem = res[1].list.filter((_: any, index: number) => (index) % 6 === 0);
+  const everyFourthItemWithShift = res[1].list.filter((_: any, index:number) => (index + 3) % 6 === 0);
+
+  const mergedList = everyFourthItem.map((item1: any, index: number) => {
+    const item2 = everyFourthItemWithShift[index];
+    console.log(new Date(item1.dt * 1000), new Date(item2.dt * 1000))
+    return {
+      ...item1, // Start with all properties from item1
+      main: {
+        ...item1.main, // Keep other main properties from item1
+        temp_min: item1.main.temp_min, // Replace temp_min with item1's value
+        temp_max: item2.main.temp_max, // Replace temp_max with item2's value
+      },
+    };
+  });
+
+  console.log(mergedList.length)
+
+  mergedList.forEach((i: any, index: number) => {
+    console.log(i);
     forecast.push({
       day: next7Days[index],
       temp: {
-        temp_max: kelvinToCelcius(i.temp.max),
-        temp_min: kelvinToCelcius(i.temp.min),
+        temp_max: kelvinToCelcius(i.main.temp_max),
+        temp_min: kelvinToCelcius(i.main.temp_min),
       },
       weather: {
         id: i.weather[0].id,
