@@ -22,6 +22,7 @@ import {
   WeatherDegree,
 } from './styled';
 import Temperature from './Temperature';
+import { useTranslation } from 'react-i18next';
 
 const CurrentWeather: React.FC = () => {
   const { weather, degreeType, isInitial, isError } = useSelector((store: AppStore) => ({
@@ -38,12 +39,14 @@ const CurrentWeather: React.FC = () => {
     }
   }, [isError]);
 
+  const {t, i18n} =  useTranslation();
+
   if (isInitial) return <></>;
 
   return (
     <WeatherContainer>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <SectionTitle>Current Weather</SectionTitle>
+        <SectionTitle>{t("current_weather")}</SectionTitle>
         <div>
           <ToggleSwitch onClick={() => dispatch(changeTempUnit())} />
         </div>
@@ -63,7 +66,7 @@ const CurrentWeather: React.FC = () => {
 
         <CurrentWeatherInfo>
           <FeelsLike>
-            Feels like <Temperature value={weather.main.feels_like} />
+            {t("feels_like")} <Temperature value={weather.main.feels_like} />
             <sup>&deg;</sup>
           </FeelsLike>
           <HighLowContainer>
@@ -80,13 +83,13 @@ const CurrentWeather: React.FC = () => {
           </HighLowContainer>
           <InfoRow>
             <div>
-              <HumidityIcon /> Humidity
+              <HumidityIcon /> {t("humidity")}
             </div>
             <span>{weather.main.humidity}%</span>
           </InfoRow>
           <InfoRow>
             <div>
-              <WindIcon /> Wind
+              <WindIcon /> {t("wind")}
             </div>
             <span>
               {degreeType === TempUnit.CELCIUS ? weather.wind.speed : kmToMile(weather.wind.speed)}
@@ -95,7 +98,7 @@ const CurrentWeather: React.FC = () => {
           </InfoRow>
           <InfoRow>
             <div>
-              <PressureIcon /> Pressure
+              <PressureIcon /> {t("pressure")}
             </div>
             <span>{weather.main.pressure}hPa</span>
           </InfoRow>

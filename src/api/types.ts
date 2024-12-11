@@ -34,5 +34,6 @@ export type ExtendedForecastData = {
   weather: {
     id: number;
     main: string;
+    description: string;
   };
 }

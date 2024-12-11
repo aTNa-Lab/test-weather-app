@@ -9,6 +9,7 @@ interface IForecastItemProps {
   high: number;
   low: number;
   main: string;
+  description: string;
 }
 const ForecastItem: React.FC<IForecastItemProps> = (props) => {
   return (

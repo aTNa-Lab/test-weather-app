@@ -4,6 +4,7 @@ import { fetchExtendedForecastData, fetchWeatherData } from '../api/weather';
 import { getNextSevenDays } from '../utils/dateUtils';
 import { kelvinToCelcius } from '../utils/unitConversion';
 import { setIsInitial, setIsLoading } from './reducers/appReducer';
+import { t } from 'i18next';
 
 export const fetchWeather = createAsyncThunk(
   'weather/fetchWeather',
@@ -65,7 +66,7 @@ export const transformWeatherData = (
 
   mergedList.forEach((i: any, index: number) => {
     forecast.push({
-      day: next7Days[index],
+      day: t(next7Days[index]),
       temp: {
         temp_max: kelvinToCelcius(i.main.temp_max),
         temp_min: kelvinToCelcius(i.main.temp_min),
@@ -73,6 +74,7 @@ export const transformWeatherData = (
       weather: {
         id: i.weather[0].id,
         main: i.weather[0].main,
+        description: i.weather[0].description,
       },
     });
   });
