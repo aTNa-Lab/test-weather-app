@@ -14,10 +14,27 @@ interface IWeatherIconProps {
   big?: boolean;
 }
 
+const mapWeatherCodeToIconCode = (code: number): number => {
+  // Example WMO to WeatherIcon mapping
+  if (code === 0) return 800; // Clear
+  if (code === 1 || code === 2) return 801; // Partly Cloudy
+  if (code === 3) return 803; // Cloudy
+  if (code >= 45 && code <= 48) return 701; // Haze/Fog
+  if (code >= 51 && code <= 55) return 300; // Drizzle
+  if (code >= 61 && code <= 65) return 500; // Rain
+  if (code >= 71 && code <= 75) return 600; // Snow
+  if (code >= 95 && code <= 99) return 200; // Thunderstorm
+
+  // Default to sunny if unknown
+  return 800;
+};
+
 const WeatherIcon: React.FC<IWeatherIconProps> = (props) => {
   let Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 
-  switch (props.code) {
+  const parsedCode = mapWeatherCodeToIconCode(props.code)
+
+  switch (parsedCode) {
     // Clear
     case 800:
       Icon = SunnyIcon;
