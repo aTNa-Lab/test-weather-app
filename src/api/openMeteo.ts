@@ -4,7 +4,7 @@ import { parseWMOCode } from "./weatherCodeParser";
 const baseUrl = "https://api.open-meteo.com/v1/forecast";
 
 export const fetchWeatherData = async (
-  city: string | { lat: number; lng: number }
+  city: string | { lat: number; lng: number, name?: string }
 ) => {
   let latitude: number, longitude: number;
 
@@ -50,7 +50,7 @@ export const fetchWeatherData = async (
 
     return {
       cod: 200, // OpenMeteo does not provide this, so we add it manually
-      name: "Location Placeholder", // OpenMeteo does not return location names
+      name: city.name, // OpenMeteo does not return location names
       main: {
         temp: Math.round(current.variables(0)!.value()), // Rounded to the nearest integer
         feels_like: Math.round(current.variables(2)!.value()), // Rounded to the nearest integer

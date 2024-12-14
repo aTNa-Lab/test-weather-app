@@ -8,7 +8,7 @@ import { fetchWeatherData, fetchExtendedForecastData } from '../api/openMeteo';
 
 export const fetchWeather = createAsyncThunk(
   'weather/fetchWeather',
-  async (city: string | { lat: number; lng: number }, { dispatch, rejectWithValue, fulfillWithValue }) => {
+  async (city: string | { lat: number; lng: number, name?: string }, { dispatch, rejectWithValue, fulfillWithValue }) => {
     dispatch(setIsLoading(true));
 
     try {

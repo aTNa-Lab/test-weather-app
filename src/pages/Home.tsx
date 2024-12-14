@@ -24,6 +24,7 @@ const Home = () => {
       fetchWeather({
         lat: 42.8546305,
         lng: 74.584006,
+        name: "Бишкек",
       })
     );
   };
